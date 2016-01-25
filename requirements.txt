@@ -1,1 +1,4 @@
 Bottle
+Bottle-SQLAlchemy
+beaker
+jinja2
