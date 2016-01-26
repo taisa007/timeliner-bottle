@@ -1,4 +1,4 @@
-from bottle import template, get, post, redirect, request, hook
+from bottle import template, get, post, redirect, request, hook, jinja2_template, route
 
 user = 'test'
 passwd = 'pass'
@@ -9,10 +9,13 @@ def setup_request():
     request.session = request.environ['beaker.session']
 
 
+@get('/')
 @get('/index')
 def index():
-    u = request.session['user_name']
-    return template('users/index', username=u)
+    u = ''
+    if request.session.has_key('user_name'):
+        u = request.session['user_name']
+    return jinja2_template('users/index', username=u)
 
 
 @get('/login')
