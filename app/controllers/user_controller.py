@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from bottle import template, get, post, redirect, request, hook, jinja2_template, route, app
+from bottle import get, post, redirect, request, hook, jinja2_template
 
 user = 'test'
 passwd = 'pass'
@@ -31,6 +31,10 @@ def index():
 
 @get('/login')
 def get_login():
+    # ログイン中はトップへリダイレクト
+    if request.session.get('user_name') is not None:
+        return redirect('/')
+
     return jinja2_template('users/login')
 
 
@@ -65,8 +69,22 @@ def post_signup():
     return redirect('/')
 
 
-@post('/logout')
-def get_logout():
+@get('/logout')
+def logout():
     request.session['user_name'] = None
     request.session.save()
-    return redirect('/login')
+    return redirect('/')
+
+
+def login_required():
+    if request.session.get('user_name') is None:
+        return redirect('/')
+
+
+@get('/mypage')
+def mypage():
+    login_required()
+    return jinja2_template('users/mypage')
+
+
+

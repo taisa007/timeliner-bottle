@@ -2,6 +2,7 @@
 
 {% if uname is not none %}
     {{ uname }}さん
+    <p><a href="/logout">ログアウト</a></p>
 {% else %}
     <p><a href="/login">ログイン</a></p>
     <p><a href="/signup">新規登録</a></p>
