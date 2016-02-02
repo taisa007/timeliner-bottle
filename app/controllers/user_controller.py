@@ -76,15 +76,13 @@ def logout():
     return redirect('/')
 
 
-def login_required():
-    if request.session.get('user_name') is None:
-        return redirect('/')
-
-
 @get('/mypage')
 def mypage():
     login_required()
     return jinja2_template('users/mypage')
 
 
+def login_required():
+    if request.session.get('user_name') is None:
+        return redirect('/')
 
